@@ -2,7 +2,7 @@
 
 import numpy as np
 import numpy.testing as npt
-
+import pytest
 
 def test_daily_mean_zeros():
     """Test that mean function works for an array of zeros."""
@@ -29,3 +29,49 @@ def test_daily_mean_integers():
     # Need to use Numpy testing functions to compare arrays
     npt.assert_array_equal(daily_mean(test_input), test_result)
 
+def test_daily_max_zeros():
+    """Test that the max function works for an array of zeros"""
+    from inflammation.models import daily_max
+
+    test_input = np.zeros((6,2))
+    test_result = np.zeros(2)
+
+    # Need to use Numpy testing functions to compare arrays
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+def test_daily_max_floats():
+    from inflammation.models import daily_max
+
+    test_input = np.linspace(start = [0, 5],
+                             stop = [1, 10],
+                             num = 11,
+                             endpoint=True)
+    test_result = np.array([1,10])
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+
+def test_daily_min_zeros():
+    """Test that the max function works for an array of zeros"""
+    from inflammation.models import daily_min
+
+    test_input = np.zeros((10,3))
+    test_result = np.zeros(3)
+
+    # Need to use Numpy testing functions to compare arrays
+    npt.assert_array_equal(daily_min(test_input), test_result)
+
+def test_daily_min_floats():
+    from inflammation.models import daily_max
+
+    x = np.linspace(0, 1, 5)
+    xx,yy = np.meshgrid(x,x)
+    test_input = xx
+    test_result = np.linspace(0,1,5)
+    npt.assert_array_equal(daily_max(test_input), test_result)
+
+def test_daily_min_string():
+    """Test for TypeError when passing strings"""
+    from inflammation.models import daily_min
+
+    with pytest.raises(TypeError):
+        error_expected = daily_min([['Hello','there'], ['General','Kenobi']])
