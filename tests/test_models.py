@@ -60,21 +60,20 @@ def test_daily_min_zeros():
     # Need to use Numpy testing functions to compare arrays
     npt.assert_array_equal(daily_min(test_input), test_result)
 
-def test_daily_min_floats():
-    from inflammation.models import daily_max
+# @pytest.mark.parametrize(
+#     "test, expected",
+#     (np.meshgrid(np.linspace(0,1,5),np.linspace(0,1,5))[0], np.linspace(0,1,5)),
+# )
+# def test_daily_min(test, expected):
+#     from inflammation.models import daily_max
+#     npt.assert_array_equal(daily_max(test), expected)
 
-    x = np.linspace(0, 1, 5)
-    xx,yy = np.meshgrid(x,x)
-    test_input = xx
-    test_result = np.linspace(0,1,5)
-    npt.assert_array_equal(daily_max(test_input), test_result)
-
-def test_daily_min_string():
-    """Test for TypeError when passing strings"""
-    from inflammation.models import daily_min
-
-    with pytest.raises(TypeError):
-        error_expected = daily_min([['Hello','there'], ['General','Kenobi']])
+# def test_daily_min_string():
+#     """Test for TypeError when passing strings"""
+#     from inflammation.models import daily_min
+#
+#     with pytest.raises(TypeError):
+#         error_expected = daily_min([['Hello','there'], ['General','Kenobi']])
 
 @pytest.mark.parametrize(
     "test, expected",
