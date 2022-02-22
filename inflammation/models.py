@@ -9,6 +9,73 @@ and each column represents a single day across all patients.
 
 import numpy as np
 
+class Observation:
+    def __init__(self, day, value):
+        self.day = day
+        self.value = value
+
+    def __str__(self):
+        return str(self.value)
+
+class Person:
+    def __init__(self, name):
+        self.name = name
+
+    def __str__(self):
+        return self.name
+
+class Doctor(Person):
+    def __init__(self, name):
+        super().__init__(name)
+        self.patients=[]
+
+    def __str__(self):
+        return self.name
+
+    def add_patient(self, patient):
+        assert isinstance(patient, Patient)
+        if patient in self.patients:
+            return "Patient in database"
+        else:
+            self.patients.append(patient)
+
+class Patient(Person):
+    """A patient in an inflammation study."""
+    def __init__(self, name, observations=None):
+        super().__init__(name)
+        self.observations = []
+        if observations is not None:
+            self.observations = observations
+
+    def add_observation(self, value, day=None):
+        if day is None:
+            try:
+                day = self.observations[-1].day + 1
+
+            except IndexError:
+                day = 0
+
+
+        new_observation = Observation(day, value)
+
+        self.observations.append(new_observation)
+        return new_observation
+
+    def __str__(self):
+        return self.name
+
+    @property
+    def last_observation(self):
+        return self.observations[-1]
+
+# alice = Patient("Alice")
+# print(alice)
+#
+# alice.add_observation(3)
+# alice.add_observation(4)
+# obs = alice.last_observation
+# print(obs)
+
 
 def load_csv(filename):
     """Load a Numpy array from a CSV
