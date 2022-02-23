@@ -110,3 +110,32 @@ def test_patient_normalise(test, expected, expected_raises):
             npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
     else:
         npt.assert_almost_equal(patient_normalise(np.array(test)), np.array(expected), decimal=2)
+
+@pytest.mark.parametrize(
+    "test, expected, expected_raises",
+    [
+        (
+            [[1,2],[3,4]],
+            [1.0,1.0],
+            None
+        ),
+        (
+            [[1,1],[1,1]],
+            [0.0,0.0],
+            None
+        ),
+        (
+            [[1,2],[3,np.NaN]],
+            [1.0, np.NaN],
+            None
+        )
+    ],
+    ids=["Correct std", "No variance", "Missing data"]
+)
+def test_daily_std(test, expected, expected_raises):
+    """Test standard deviation works for arrays of integers"""
+    from inflammation.models import daily_std
+    if expected_raises is not None:
+        None
+    else:
+        npt.assert_array_equal(daily_std(np.array(test)), np.array(expected))
